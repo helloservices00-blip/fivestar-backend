@@ -8,6 +8,7 @@ import userRoutes from "./routes/userRoutes.js";
 import vendorRoutes from "./routes/vendorRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import vendorOrderRoutes from "./routes/vendorOrderRoutes.js";
 
 import moduleRoutes from "./routes/moduleRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
@@ -32,6 +33,7 @@ app.use("/api/modules", moduleRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/subcategories", subcategoryRoutes);
 app.use("/api/vendor/dashboard", vendorDashboardRoutes);
+app.use("/api/vendor/orders", vendorOrderRoutes);
 
 // DATABASE & SERVER
 mongoose.connect(process.env.MONGO_URI)
