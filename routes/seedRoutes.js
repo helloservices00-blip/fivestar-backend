@@ -18,29 +18,35 @@ router.get("/full-seed", async (req, res) => {
     await Vendor.deleteMany({});
     await User.deleteMany({});
 
-    // 1️⃣ Create dummy user
+    // 1️⃣ Create a dummy user
     const dummyUser = await User.create({
       name: "Seed User",
       email: "seeduser@example.com",
-      password: "123456" // Make sure you hash in real app
+      password: "123456" // hash in real app
     });
 
-    // 2️⃣ Vendors
+    // 2️⃣ Vendors with unique emails
     const vendors = await Vendor.insertMany([
       {
         name: "Hyderabadi Biryani House",
         shopName: "Biryani House",
-        user: dummyUser._id
+        user: dummyUser._id,
+        email: "biryani@vendor.com",
+        password: "123456"
       },
       {
         name: "Pizza Planet",
         shopName: "Pizza Planet Shop",
-        user: dummyUser._id
+        user: dummyUser._id,
+        email: "pizza@vendor.com",
+        password: "123456"
       },
       {
         name: "Fashion Hub",
         shopName: "Fashion Hub Store",
-        user: dummyUser._id
+        user: dummyUser._id,
+        email: "fashion@vendor.com",
+        password: "123456"
       }
     ]);
 
