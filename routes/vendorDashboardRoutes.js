@@ -1,7 +1,7 @@
 import express from "express";
 import Vendor from "../models/Vendor.js";
 import Product from "../models/Product.js";
-import { vendorAuth } from "../middleware/vendorAuth.js";
+import { vendorAuth } from "../middlewares/vendorAuth.js";
 
 const router = express.Router();
 
