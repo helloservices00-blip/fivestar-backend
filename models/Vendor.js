@@ -1,8 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const vendorSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  modules: [{ type: mongoose.Schema.Types.ObjectId, ref: "Module" }]
-});
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    shopName: { type: String, required: true },
+    approved: { type: Boolean, default: false },
+    products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }]
+}, { timestamps: true });
 
-export default mongoose.model("Vendor", vendorSchema);
+export default mongoose.model('Vendor', vendorSchema);
