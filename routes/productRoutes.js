@@ -3,26 +3,17 @@ import Product from "../models/Product.js";
 
 const router = express.Router();
 
-// GET products with optional module/vendor filtering
+// GET all products
 router.get("/", async (req, res) => {
   try {
-    const { moduleId, vendorId } = req.query;
-
-    // Build filter object
-    const filter = {};
-    if (moduleId) filter.module = moduleId;
-    if (vendorId) filter.vendor = vendorId;
-
-    // Find products and populate references
-    const products = await Product.find(filter)
-      .populate("vendor", "shopName")
-      .populate("module", "name")
-      .populate("category", "name")
-      .populate("subcategory", "name");
+    const products = await Product.find()
+      .populate("vendor", "shopName")      // vendor name
+      .populate("module", "name")          // module name
+      .populate("category", "name")        // category name
+      .populate("subcategory", "name");   // subcategory name
 
     res.json(products);
   } catch (err) {
-    console.error("Error fetching products:", err);
     res.status(500).json({ message: "Error fetching products", error: err });
   }
 });
