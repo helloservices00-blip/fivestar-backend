@@ -1,6 +1,6 @@
 import express from "express";
 import Product from "../models/Product.js";
-import { vendorAuth } from "../middlewares/vendorAuth.js";
+import { vendorAuth } from "../middleware/vendorAuth.js";
 
 const router = express.Router();
 
