@@ -1,7 +1,7 @@
 import express from "express";
 import Product from "../models/Product.js";
 import Vendor from "../models/Vendor.js";
-import { verifyVendor } from "../middleware/authMiddleware.js"; // example auth middleware
+import { verifyVendor } from "../middlewares/authMiddleware.js"; // example auth middleware
 
 const router = express.Router();
 
