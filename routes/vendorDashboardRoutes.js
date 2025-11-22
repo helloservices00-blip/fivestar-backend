@@ -1,7 +1,12 @@
-router.get("/profile", vendorAuth, async (req, res) => {
+router.put("/profile", vendorAuth, async (req, res) => {
   try {
-    const vendor = await Vendor.findById(req.vendor.id).select("-password");
-    res.json(vendor);
+    const updated = await Vendor.findByIdAndUpdate(
+      req.vendor.id,
+      req.body,
+      { new: true }
+    ).select("-password");
+
+    res.json(updated);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
