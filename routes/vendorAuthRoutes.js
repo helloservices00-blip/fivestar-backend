@@ -2,7 +2,7 @@ import express from "express";
 import Vendor from "../models/Vendor.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { vendorAuth } from "../middlewares/vendorAuth.js";
+import { vendorAuth } from "../middleware/vendorAuth.js";
 
 const router = express.Router();
 
