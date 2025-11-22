@@ -16,6 +16,9 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import subcategoryRoutes from "./routes/subcategoryRoutes.js";
 import vendorDashboardRoutes from "./routes/vendorDashboardRoutes.js";
 
+// ✅ ADD THIS LINE
+import vendorAuthRoutes from "./routes/vendorAuthRoutes.js";
+
 dotenv.config();
 const app = express();
 
@@ -33,8 +36,13 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/modules", moduleRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/subcategories", subcategoryRoutes);
+
+// VENDOR ROUTES
+app.use("/api/vendor/auth", vendorAuthRoutes);     // ✅ FIXED
 app.use("/api/vendor/dashboard", vendorDashboardRoutes);
 app.use("/api/vendor/orders", vendorOrderRoutes);
+
+// ADMIN ROUTES
 app.use("/api/admin/orders", adminOrderRoutes);
 
 // DATABASE & SERVER
