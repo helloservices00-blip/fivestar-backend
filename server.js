@@ -12,6 +12,7 @@ import orderRoutes from "./routes/orderRoutes.js";
 import moduleRoutes from "./routes/moduleRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import subcategoryRoutes from "./routes/subcategoryRoutes.js";
+import vendorDashboardRoutes from "./routes/vendorDashboardRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -30,6 +31,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/modules", moduleRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/subcategories", subcategoryRoutes);
+app.use("/api/vendor/dashboard", vendorDashboardRoutes);
 
 // DATABASE & SERVER
 mongoose.connect(process.env.MONGO_URI)
