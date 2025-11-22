@@ -1,4 +1,5 @@
 import express from "express";
+import User from "../models/User.js";
 import Vendor from "../models/Vendor.js";
 import Module from "../models/Module.js";
 import Category from "../models/Category.js";
@@ -9,28 +10,48 @@ const router = express.Router();
 
 router.get("/full-seed", async (req, res) => {
   try {
-    // Clear existing data
-    await Vendor.deleteMany({});
-    await Module.deleteMany({});
-    await Category.deleteMany({});
-    await SubCategory.deleteMany({});
+    // 0️⃣ Clear existing data
     await Product.deleteMany({});
+    await SubCategory.deleteMany({});
+    await Category.deleteMany({});
+    await Module.deleteMany({});
+    await Vendor.deleteMany({});
+    await User.deleteMany({});
 
-    // 1️⃣ Vendors
+    // 1️⃣ Create dummy user
+    const dummyUser = await User.create({
+      name: "Seed User",
+      email: "seeduser@example.com",
+      password: "123456" // Make sure you hash in real app
+    });
+
+    // 2️⃣ Vendors
     const vendors = await Vendor.insertMany([
-      { name: "Hyderabadi Biryani House" },
-      { name: "Pizza Planet" },
-      { name: "Fashion Hub" }
+      {
+        name: "Hyderabadi Biryani House",
+        shopName: "Biryani House",
+        user: dummyUser._id
+      },
+      {
+        name: "Pizza Planet",
+        shopName: "Pizza Planet Shop",
+        user: dummyUser._id
+      },
+      {
+        name: "Fashion Hub",
+        shopName: "Fashion Hub Store",
+        user: dummyUser._id
+      }
     ]);
 
-    // 2️⃣ Modules
+    // 3️⃣ Modules
     const modules = await Module.insertMany([
       { name: "Food" },
       { name: "Electronics" },
       { name: "Fashion" }
     ]);
 
-    // 3️⃣ Categories
+    // 4️⃣ Categories
     const categories = await Category.insertMany([
       { name: "Biryani", module: modules.find(m => m.name === "Food")._id },
       { name: "Pizza", module: modules.find(m => m.name === "Food")._id },
@@ -40,7 +61,7 @@ router.get("/full-seed", async (req, res) => {
       { name: "Women's Clothing", module: modules.find(m => m.name === "Fashion")._id }
     ]);
 
-    // 4️⃣ Subcategories
+    // 5️⃣ Subcategories
     const subcategories = await SubCategory.insertMany([
       { name: "Non-Veg", category: categories.find(c => c.name === "Biryani")._id },
       { name: "Veg", category: categories.find(c => c.name === "Pizza")._id },
@@ -50,7 +71,7 @@ router.get("/full-seed", async (req, res) => {
       { name: "Formal", category: categories.find(c => c.name === "Women's Clothing")._id }
     ]);
 
-    // 5️⃣ Products
+    // 6️⃣ Products
     const products = await Product.insertMany([
       {
         name: "Hyderabadi Biryani",
@@ -86,12 +107,14 @@ router.get("/full-seed", async (req, res) => {
 
     res.json({
       message: "Full seed completed ✅",
+      dummyUser,
       vendors,
       modules,
       categories,
       subcategories,
       products
     });
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Error seeding database", error: err.message });
