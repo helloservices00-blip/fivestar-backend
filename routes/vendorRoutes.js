@@ -1,6 +1,6 @@
 import express from 'express';
 import { createVendor, getVendors, approveVendor } from '../controllers/vendorController.js';
-import { protect, admin } from '../middlewares/authMiddleware.js';
+import { protect, admin } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
