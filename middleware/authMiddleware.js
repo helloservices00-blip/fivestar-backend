@@ -1,8 +1,9 @@
+// middleware/authMiddleware.js
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import Vendor from "../models/Vendor.js";
 
-// Protect routes for users
+// Protect routes for logged-in users
 export const protect = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
@@ -12,13 +13,13 @@ export const protect = async (req, res, next) => {
 
     const token = authHeader.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
     const user = await User.findById(decoded.id);
     if (!user) return res.status(401).json({ message: "Unauthorized" });
 
     req.user = user;
     next();
   } catch (err) {
+    console.error("Protect middleware error:", err);
     res.status(401).json({ message: "Unauthorized", error: err });
   }
 };
@@ -32,7 +33,7 @@ export const admin = (req, res, next) => {
   }
 };
 
-// Vendor verification middleware
+// Vendor verification middleware (from before)
 export const verifyVendor = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
@@ -42,13 +43,13 @@ export const verifyVendor = async (req, res, next) => {
 
     const token = authHeader.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
     const vendor = await Vendor.findById(decoded.id);
     if (!vendor) return res.status(401).json({ message: "Unauthorized" });
 
     req.vendor = vendor;
     next();
   } catch (err) {
+    console.error("Vendor auth error:", err);
     res.status(401).json({ message: "Unauthorized", error: err });
   }
 };
