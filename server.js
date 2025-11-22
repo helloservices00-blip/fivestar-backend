@@ -15,6 +15,7 @@ import moduleRoutes from "./routes/moduleRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import subcategoryRoutes from "./routes/subcategoryRoutes.js";
 import vendorDashboardRoutes from "./routes/vendorDashboardRoutes.js";
+import seedRoutes from "./routes/seedRoutes.js";
 
 // ✅ ADD THIS LINE
 import vendorAuthRoutes from "./routes/vendorAuthRoutes.js";
@@ -44,6 +45,7 @@ app.use("/api/vendor/orders", vendorOrderRoutes);
 
 // ADMIN ROUTES
 app.use("/api/admin/orders", adminOrderRoutes);
+app.use("/api/seed", seedRoutes);
 
 // DATABASE & SERVER
 mongoose.connect(process.env.MONGO_URI)
